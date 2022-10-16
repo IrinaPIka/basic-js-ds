@@ -1,36 +1,44 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-// const { ListNode } = require('../extensions/list-node.js');
+const { ListNode } = require('../extensions/list-node.js');
 
-/**
- * Implement the Queue with a given interface via linked list (use ListNode extension above).
- *
- * @example
- * const queue = new Queue();
- *
- * queue.enqueue(1); // adds the element to the queue
- * queue.enqueue(3); // adds the element to the queue
- * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
- * queue.getUnderlyingList() // returns { value: 3, next: null }
- */
 class Queue {
+  constructor() { this.endNode = null; this.firstNode=null; }
 
   getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.firstNode;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  enqueue(value) {
+    let newNode=new ListNode(value); //новый элементт
+
+    if(this.firstNode==null) 
+    { this.firstNode=newNode; 
+      this.endNode=this.firstNode;
+    }
+    else  // элемент не первый
+    {
+      this.endNode.next=newNode;  // последнему элементу присвоили ссылку на текуший конец 
+      //console.log('value:',value, 'new:',newNode) ;  
+      //console.log('first:',this.firstNode, '------') ;  
+      this.endNode=newNode;  // добавили в конец новый элемент
+    }
+    
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if(this.firstNode==null) return null; // удалять нечего, лчередб пуста
+    let res= this.firstNode.value; // нам надо вернуть значение первого элемента
+    if(this.firstNode.next == null)   // в очереди был один элемент и мы его удаляем
+      this.firstNode=null
+      else 
+      this.firstNode=this.firstNode.next;
+    return res;
   }
 }
+
 
 module.exports = {
   Queue
 };
+
